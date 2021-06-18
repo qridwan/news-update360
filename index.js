@@ -1,6 +1,7 @@
 const express = require("express");
 const newsData = require("./news_data");
 newsData;
+require("dotenv").config();
 const app = express();
 
 app.use(express.json());
@@ -23,12 +24,12 @@ app.get("/:category/:subCategory", (req, res) => {
     (obj) => obj.category_id === req.params.category
   );
   const news_by_subcategory = news_by_category.filter((obj) => {
-      const a = obj.subcategory_id;
-      const required = req.params.subCategory;
-     const matched = a.find((cate) => cate === required);
-     if (matched) {
-         return obj
-     }
+    const a = obj.subcategory_id;
+    const required = req.params.subCategory;
+    const matched = a.find((cate) => cate === required);
+    if (matched) {
+      return obj;
+    }
     // const subCategory_array = obj.subcategory_id;
     // const subCategoryNews = subCategory_array.filter(
     //   (cate) => cate === req.params.subCategory
@@ -36,12 +37,8 @@ app.get("/:category/:subCategory", (req, res) => {
     // console.log("🚀 ~ subCategoryNews", subCategoryNews)
     // return subCategoryNews;
   });
-
-  console.log(
-    "🚀 ~ file: index.js ~ line 24 ~ app.get ~ news_by_subcategory",
-    news_by_subcategory
-  );
   res.send(news_by_subcategory);
 });
+const port = process.env.PORT || 5000;
 
-app.listen(4000, () => console.log("LISTENINNG"));
+app.listen(port);
