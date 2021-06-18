@@ -42,29 +42,31 @@ app.get("/home", (req, res) => {
     const news_by_category = newsData.filter(
       (obj) => obj.category_id === category
     );
-    const topNews_by_category = newsData.filter((obj) =>
-      news_by_category.slice(0, 5)
-    );
+    const topNews_by_category = news_by_category.slice(0, 5);
     return topNews_by_category;
   };
 
   const topNews = [
     {
+      category_name: "Sports",
       sports: getTopNews("Sports"),
     },
+    { category_name: "India", 
+    india: getTopNews("India") },
     {
-      india: getTopNews("India"),
-    },
-    {
+      category_name: "International",
       international: getTopNews("International"),
     },
     {
+      category_name: "Tamilnadu",
       tamilnadu: getTopNews("Tamilnadu"),
     },
     {
+      category_name: "Cinema",
       cinema: getTopNews("Cinema"),
     },
     {
+      category_name: "Economy",
       economy: getTopNews("Economy"),
     },
   ];
