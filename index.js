@@ -1,5 +1,7 @@
 const express = require("express");
+const categories = require("./categories");
 const newsData = require("./news_data");
+const subCategories = require("./subCategories");
 newsData;
 require("dotenv").config();
 const app = express();
@@ -8,6 +10,66 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send(newsData);
+});
+
+app.get("/categories", (req, res) => {
+  res.send(categories);
+});
+app.get("/sub-categories", (req, res) => {
+  res.send(subCategories);
+});
+
+app.get("/sliderInfo", (req, res) => {
+  const SliderNews = (category) => {
+    const news_by_category = newsData.find(
+      (obj) => obj.category_id === category
+    );
+    return news_by_category;
+  };
+  const topNews = [
+    SliderNews("Sports"),
+    SliderNews("India"),
+    SliderNews("International"),
+    SliderNews("Tamilnadu"),
+    SliderNews("Cinema"),
+    SliderNews("Economy"),
+  ];
+  res.send(topNews);
+});
+
+app.get("/home", (req, res) => {
+  const getTopNews = (category) => {
+    const news_by_category = newsData.filter(
+      (obj) => obj.category_id === category
+    );
+    const topNews_by_category = newsData.filter((obj) =>
+      news_by_category.slice(0, 5)
+    );
+    return topNews_by_category;
+  };
+
+  const topNews = [
+    {
+      sports: getTopNews("Sports"),
+    },
+    {
+      india: getTopNews("India"),
+    },
+    {
+      international: getTopNews("International"),
+    },
+    {
+      tamilnadu: getTopNews("Tamilnadu"),
+    },
+    {
+      cinema: getTopNews("Cinema"),
+    },
+    {
+      economy: getTopNews("Economy"),
+    },
+  ];
+
+  res.send(topNews);
 });
 
 //Getting news by category
@@ -30,12 +92,19 @@ app.get("/:category/:subCategory", (req, res) => {
     if (matched) {
       return obj;
     }
-    // const subCategory_array = obj.subcategory_id;
-    // const subCategoryNews = subCategory_array.filter(
-    //   (cate) => cate === req.params.subCategory
-    // );
-    // console.log("🚀 ~ subCategoryNews", subCategoryNews)
-    // return subCategoryNews;
+  });
+  res.send(news_by_subcategory);
+});
+
+//Getting news by sub category
+app.get("/tags/subcategory/:tag", (req, res) => {
+  const news_by_subcategory = newsData.filter((obj) => {
+    const subCategory = obj.subcategory_id;
+    const required = req.params.tag;
+    const matched = subCategory.find((cate) => cate === required);
+    if (matched) {
+      return obj;
+    }
   });
   res.send(news_by_subcategory);
 });
