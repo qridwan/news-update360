@@ -7,7 +7,6 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-
 app.get("/", (req, res) => {
   res.send(newsData);
 });
@@ -49,28 +48,26 @@ app.get("/home", (req, res) => {
   const topNews = [
     {
       category_name: "Sports",
-      sports: getTopNews("Sports"),
+      news: getTopNews("Sports"),
     },
-    { category_name: "India", 
-    india: getTopNews("India") },
+    { category_name: "India", news: getTopNews("India") },
     {
       category_name: "International",
-      international: getTopNews("International"),
+      news: getTopNews("International"),
     },
     {
       category_name: "Tamilnadu",
-      tamilnadu: getTopNews("Tamilnadu"),
+      news: getTopNews("Tamilnadu"),
     },
     {
       category_name: "Cinema",
-      cinema: getTopNews("Cinema"),
+      news: getTopNews("Cinema"),
     },
     {
       category_name: "Economy",
-      economy: getTopNews("Economy"),
+      news: getTopNews("Economy"),
     },
   ];
-
   res.send(topNews);
 });
 
