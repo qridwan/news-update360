@@ -72,7 +72,7 @@ app.get("/home", (req, res) => {
 });
 
 //Getting news by category
-app.get("category/:category", (req, res) => {
+app.get("/category/:category", (req, res) => {
   const news_by_category = newsData.filter(
     (obj) => obj.category_id === req.params.category
   );
@@ -80,7 +80,7 @@ app.get("category/:category", (req, res) => {
 });
 
 //Getting news by category for pagination
-app.get("category/:category/:numb", (req, res) => {
+app.get("/category/:category/:numb", (req, res) => {
   const news_by_category = newsData.filter(
     (obj) => obj.category_id === req.params.category
   );
